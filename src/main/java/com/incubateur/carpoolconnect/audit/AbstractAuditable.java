@@ -1,4 +1,4 @@
-package com.incubateur.carpoolconnect.entities;
+package com.incubateur.carpoolconnect.audit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -27,7 +27,7 @@ public class AbstractAuditable {
     private String createdBy;
 
     @LastModifiedBy
-    @Column(name = "modified_by")
+    @Column(name = "updated_by")
     private String modifiedBy;
 
 }
