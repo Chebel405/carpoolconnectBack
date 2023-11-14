@@ -3,6 +3,8 @@ package com.incubateur.carpoolconnect.entities;
 import com.incubateur.carpoolconnect.audit.AbstractAuditable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -44,13 +46,15 @@ public class User extends AbstractAuditable implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    private int phoneNumber;
+
     private int points;
 
     private String activationKey;
 
     private String passwordRenewalKey;
 
-    private boolean isActive;
+    private boolean isEnabled;
 
     @OneToMany(mappedBy = "user")
     private List<ChatMessage> messagesSent;
@@ -77,6 +81,7 @@ public class User extends AbstractAuditable implements UserDetails {
     private List<Reservation> reservations;
 
     @ManyToOne
+    @Cascade(CascadeType.PERSIST)
     private Role role;
 
     @Override
