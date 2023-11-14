@@ -20,6 +20,7 @@ public class Rating extends AbstractAuditable implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -7830511696681440849L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

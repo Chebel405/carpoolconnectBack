@@ -27,5 +27,8 @@ public class ChatMessage extends AbstractAuditable implements Serializable {
     private boolean isFlagged;
 
     @ManyToOne(optional = false)
-    private User user;
+    private User sender;
+
+    @ManyToOne(optional = false)
+    private User receiver;
 }

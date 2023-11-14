@@ -56,13 +56,13 @@ public class User extends AbstractAuditable implements UserDetails {
 
     private boolean isEnabled;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "sender")
     private List<ChatMessage> messagesSent;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "receiver")
     private List<ChatMessage> messagesReceived;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "commenter")
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "driver")

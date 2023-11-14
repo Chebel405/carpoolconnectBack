@@ -1,6 +1,5 @@
 package com.incubateur.carpoolconnect.dto;
 
-import com.incubateur.carpoolconnect.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +13,7 @@ public class ChatMessageDto {
 
     private boolean isFlagged;
 
-    private UserDto user;
+    private UserDto sender;
+
+    private UserDto receiver;
 }

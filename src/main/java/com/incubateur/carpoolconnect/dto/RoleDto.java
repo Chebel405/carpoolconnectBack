@@ -4,11 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleDto {
 
-    String name;
+    private String name;
+
+    private List<UserDto> users;
 
 }

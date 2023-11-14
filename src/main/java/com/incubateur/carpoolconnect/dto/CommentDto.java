@@ -15,7 +15,7 @@ public class CommentDto {
 
     private boolean isFlagged;
 
-    private UserDto user;
+    private UserDto commenter;
 
     private RouteDto route;
 }

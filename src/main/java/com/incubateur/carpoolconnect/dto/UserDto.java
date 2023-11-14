@@ -16,9 +16,9 @@ public class UserDto {
 
     private String lastName;
 
-    private String email;
-
     private LocalDate dateOfBirth;
+
+    private String email;
 
     private int phoneNumber;
 
@@ -41,5 +41,6 @@ public class UserDto {
     private List<ReservationDto> reservations;
 
     private RoleDto role;
+
 
 }

@@ -36,4 +36,10 @@ public class RouteDto {
     private AddressDto destination;
 
     private List<AddressDto> intermediateAddresses;
+
+    private List<RatingDto> ratings;
+
+    private List<ReservationDto> reservations;
+
+
 }

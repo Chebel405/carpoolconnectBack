@@ -29,7 +29,7 @@ public class Comment extends AbstractAuditable implements Serializable {
     private boolean isFlagged;
 
     @ManyToOne(optional = false)
-    private User user;
+    private User commenter;
 
     @ManyToOne(optional = false)
     private Route route;
