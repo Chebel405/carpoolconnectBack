@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,9 +29,13 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(HttpMethod.GET,"/api/route/**")
+                        req.requestMatchers(HttpMethod.GET, "/api/route/**")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/authenticate/**", "/api/register/**")
+                                .requestMatchers(HttpMethod.POST,
+                                        "/api/authenticate/**",
+                                        "/api/register/**",
+                                        "/api/activate/**",
+                                        "/api/password/email/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
@@ -40,4 +45,10 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+    @Override
+    public void addCorsMappings(@org.jetbrains.annotations.NotNull CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+
 }
