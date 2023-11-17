@@ -11,9 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.Base64;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .activationKey(getKey())
-                .isEnabled(false)
+                .isEnabled(true)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .points(50)
                 .role(Role.builder()
@@ -43,14 +42,11 @@ public class AuthenticationService {
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
 
-        emailService.sendSimpleMessage(request.getEmail(), "Hey simple", "yo wat up");
-
         Context context = new Context();
         context.setVariable("firstName", user.getFirstName());
         context.setVariable("email", user.getEmail());
         context.setVariable("key", user.getActivationKey());
         emailService.sendEmailWithHtmlTemplate(user.getEmail(), "hey", "email-account-activation-template", context);
-
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -103,15 +99,16 @@ public class AuthenticationService {
         return "";
     }
 
-
+    public String reinitializePassword(PasswordRenewalRequest request) {
+        var user = userRepository.findByPasswordRenewalKey(request.getKey())
+                .orElseThrow();
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.saveAndFlush(user);
+        return "";
+    }
 
     private String getKey() {
-        String key = "";
-        try {
-            key = Base64.getEncoder().encodeToString(KeyGen.getKeyFromKeyGenerator(KeyGen.CIPHER, 112).getEncoded());
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println(e);
-        }
-        return key;
+        return UUID.randomUUID().toString();
     }
+
 }
