@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirmation d'adresse mail</title>
+    <style>
+        .inline {
+            display: inline;
+        }
+        .link-button {
+            background: none;
+            border: none;
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: serif;
+        }
+        .link-button:focus {
+            outline: none;
+        }
+        .link-button:active {
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<p th:inline="text">Bonjour
+    [[${firstName}]]
+    , veuillez cliquer sur ce lien afin de confirmer votre adresse mail : [[${key}]]</p>
+
+<form method="post" action="some_page" class="inline">
+    <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+    <button type="submit" name="submit_param" value="submit_value" class="link-button">
+        This is a link that sends a POST request
+    </button>
+</form>
+
+</body>
+</html>
