@@ -111,6 +111,6 @@ public class User extends AbstractAuditable implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 }

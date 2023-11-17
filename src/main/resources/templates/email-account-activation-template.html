@@ -2,36 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Confirmation d'adresse mail</title>
-    <style>
-        .inline {
-            display: inline;
-        }
-        .link-button {
-            background: none;
-            border: none;
-            color: blue;
-            text-decoration: underline;
-            cursor: pointer;
-            font-size: 1em;
-            font-family: serif;
-        }
-        .link-button:focus {
-            outline: none;
-        }
-        .link-button:active {
-            color:red;
-        }
-    </style>
+    <link th:href="@{http://localhost:8080/carpoolconnect-backend/src/main/resources/styles/button.css}"
+          rel="stylesheet" type="text/css">
 </head>
 <body>
 <p th:inline="text">Bonjour
     [[${firstName}]]
-    , veuillez cliquer sur ce lien afin de confirmer votre adresse mail : [[${key}]]</p>
+    , veuillez cliquer sur ce lien afin de confirmer votre adresse mail :</p>
 
-<form method="post" action="some_page" class="inline">
-    <input type="hidden" name="extra_submit_param" value="extra_submit_value">
-    <button type="submit" name="submit_param" value="submit_value" class="link-button">
-        This is a link that sends a POST request
+<form method="post" th:action="@{'http://localhost:8080/api/activate/' + ${email} + '/' + ${key}}" class="inline"
+      id="form-activation">
+    <input type="hidden" name="extra_submit_param">
+    <button type="submit" name="submit_param" class="link-button">
+        Cliquer ici
     </button>
 </form>
 
