@@ -1,10 +1,7 @@
 package com.incubateur.carpoolconnect.controllers;
 
 import com.incubateur.carpoolconnect.services.impl.AuthenticationService;
-import com.incubateur.carpoolconnect.utilities.AuthenticationRequest;
-import com.incubateur.carpoolconnect.utilities.AuthenticationResponse;
-import com.incubateur.carpoolconnect.utilities.PasswordRenewalRequest;
-import com.incubateur.carpoolconnect.utilities.RegisterRequest;
+import com.incubateur.carpoolconnect.utilities.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +29,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.activateAccount(email, key));
     }
 
-    @PostMapping(value = "/password/email/{email}")
-    public ResponseEntity<String> reinitializePasswordEmail(@PathVariable String email) {
-        return ResponseEntity.ok(service.reinitializePasswordEmail(email));
+    @PostMapping(value = "/password/email")
+    public ResponseEntity<String> reinitializePasswordEmail(@RequestBody PasswordEmailRequest request) {
+        return ResponseEntity.ok(service.reinitializePasswordEmail(request));
     }
 
     @PostMapping(value = "/password")

@@ -41,7 +41,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                                         "/api/authenticate/**",
                                         "/api/register/**",
                                         "/api/activate/**",
-                                        "/api/password/email/**",
+                                        "/api/password/email",
                                         "api/password/**")
                                 .permitAll()
                                 .anyRequest()

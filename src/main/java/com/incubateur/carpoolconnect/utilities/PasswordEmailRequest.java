@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PasswordRenewalRequest {
+public class PasswordEmailRequest {
 
-    private String password;
     private String email;
-    private String key;
 
 }

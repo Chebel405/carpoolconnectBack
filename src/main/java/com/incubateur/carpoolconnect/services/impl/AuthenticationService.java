@@ -76,15 +76,16 @@ public class AuthenticationService {
     public boolean activateAccount(String email, String key) {
         var user = userRepository.findByEmail(email)
                 .orElseThrow();
-        if (user.getActivationKey().equals(key)) {
+        if (verifyActivationKey(key, user)) {
             user.setEnabled(true);
+            user.setActivationKey(null);
             userRepository.saveAndFlush(user);
         }
         return user.isEnabled();
     }
 
-    public String reinitializePasswordEmail(String email) {
-        var user = userRepository.findByEmail(email)
+    public String reinitializePasswordEmail(PasswordEmailRequest request) {
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
         String key = getKey();
@@ -93,22 +94,34 @@ public class AuthenticationService {
         userRepository.saveAndFlush(user);
 
         Context context = new Context();
-        context.setVariable("email", email);
+        context.setVariable("email", request.getEmail());
         context.setVariable("key", key);
         emailService.sendEmailWithHtmlTemplate(user.getEmail(), "Réinitialisation mot de passe", "email-password-reinitialization", context);
         return "";
     }
 
     public String reinitializePassword(PasswordRenewalRequest request) {
-        var user = userRepository.findByPasswordRenewalKey(request.getKey())
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        userRepository.saveAndFlush(user);
-        return "";
+        if (verifyPasswordKey(request.getKey(), user)) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            user.setPasswordRenewalKey(null);
+            userRepository.saveAndFlush(user);
+            return "";
+        }
+        return null;
     }
 
     private String getKey() {
         return UUID.randomUUID().toString();
+    }
+
+    private boolean verifyActivationKey(String key, User user) {
+        return key.equals(user.getActivationKey());
+    }
+
+    private boolean verifyPasswordKey(String key, User user) {
+        return key.equals(user.getPasswordRenewalKey());
     }
 
 }
