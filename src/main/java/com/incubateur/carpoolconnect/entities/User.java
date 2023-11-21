@@ -46,7 +46,7 @@ public class User extends AbstractAuditable implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private int phoneNumber;
+    private String phoneNumber;
 
     private int points;
 

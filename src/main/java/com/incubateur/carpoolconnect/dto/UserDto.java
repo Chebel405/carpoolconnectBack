@@ -20,7 +20,7 @@ public class UserDto {
 
     private String email;
 
-    private int phoneNumber;
+    private String phoneNumber;
 
     private int points;
 
