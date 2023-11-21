@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -40,7 +42,11 @@ public class AuthenticationService {
                         .build())
                 .build();
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("auth", user.getRole().getName());
+
+        var jwtToken = jwtService.generateToken(claims, user);
 
         Context context = new Context();
         context.setVariable("firstName", user.getFirstName());
@@ -63,8 +69,12 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("auth", user.getRole().getName());
+
+
         if (user.isEnabled()) {
-            var jwtToken = jwtService.generateToken((user));
+            var jwtToken = jwtService.generateToken(claims, user);
             return AuthenticationResponse
                     .builder()
                     .token(jwtToken)
