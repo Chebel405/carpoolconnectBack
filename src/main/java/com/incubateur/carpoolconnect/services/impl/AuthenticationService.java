@@ -34,7 +34,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .activationKey(getKey())
-                .isEnabled(true)
+                .isEnabled(false)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .points(50)
                 .role(Role.builder()
@@ -52,12 +52,14 @@ public class AuthenticationService {
         context.setVariable("firstName", user.getFirstName());
         context.setVariable("email", user.getEmail());
         context.setVariable("key", user.getActivationKey());
-        emailService.sendEmailWithHtmlTemplate(user.getEmail(), "hey", "email-account-activation-template", context);
+        emailService.sendEmailWithHtmlTemplate(user.getEmail(), "Activation de votre compte", "email-account-activation-template", context);
 
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+//        return AuthenticationResponse.builder()
+//                .token(jwtToken)
+//                .build();
+        return null;
     }
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
