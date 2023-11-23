@@ -34,7 +34,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .activationKey(getKey())
-                .isEnabled(false)
+                .isEnabled(true)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .points(50)
                 .role(Role.builder()
@@ -86,10 +86,12 @@ public class AuthenticationService {
     }
 
     public boolean activateAccount(String email, String key) {
+        System.out.println("compte activation");
         var user = userRepository.findByEmail(email)
                 .orElseThrow();
         if (verifyActivationKey(key, user)) {
             user.setEnabled(true);
+            System.out.println("compte activé");
             user.setActivationKey(null);
             userRepository.saveAndFlush(user);
         }

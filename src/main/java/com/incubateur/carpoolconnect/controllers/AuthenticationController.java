@@ -26,6 +26,7 @@ public class AuthenticationController {
 
     @PostMapping(value = "/activate/{email}/{key}")
     public ResponseEntity<Boolean> activateAccount(@PathVariable String email, @PathVariable String key) {
+        System.out.println("controller");
         return ResponseEntity.ok(service.activateAccount(email, key));
     }
 
