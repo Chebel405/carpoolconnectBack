@@ -34,7 +34,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
                 .activationKey(getKey())
-                .isEnabled(true)
+                .isEnabled(false)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .points(50)
                 .role(Role.builder()
@@ -46,7 +46,7 @@ public class AuthenticationService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("auth", user.getRole().getName());
 
-        var jwtToken = jwtService.generateToken(claims, user);
+//        var jwtToken = jwtService.generateToken(claims, user);
 
         Context context = new Context();
         context.setVariable("firstName", user.getFirstName());
@@ -85,13 +85,11 @@ public class AuthenticationService {
         return null;
     }
 
-    public boolean activateAccount(String email, String key) {
-        System.out.println("compte activation");
-        var user = userRepository.findByEmail(email)
+    public boolean activateAccount(ActivationRequest request) {
+        var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
-        if (verifyActivationKey(key, user)) {
+        if (verifyActivationKey(request.getKey(), user)) {
             user.setEnabled(true);
-            System.out.println("compte activé");
             user.setActivationKey(null);
             userRepository.saveAndFlush(user);
         }

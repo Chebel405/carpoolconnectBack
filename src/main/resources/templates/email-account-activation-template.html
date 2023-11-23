@@ -8,15 +8,7 @@
 <body>
 <p th:inline="text">Bonjour
     [[${firstName}]]
-    , veuillez cliquer sur ce lien afin de confirmer votre adresse mail :</p>
-
-<form method="post" th:action="@{'http://localhost:8080/api/activate/' + ${email} + '/' + ${key}}" class="inline"
-      id="form-activation">
-    <input type="hidden" name="extra_submit_param">
-    <button type="submit" name="submit_param" class="link-button">
-        Cliquer ici
-    </button>
-</form>
+    , veuillez cliquer sur ce lien afin d'activer votre compte : <a th:href="@{'http://localhost:5173/activation/' + ${email} + '/' + ${key}}"> Activer mon compte </a> </p>
 
 </body>
 </html>

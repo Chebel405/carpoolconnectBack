@@ -24,10 +24,10 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
-    @PostMapping(value = "/activate/{email}/{key}")
-    public ResponseEntity<Boolean> activateAccount(@PathVariable String email, @PathVariable String key) {
+    @PostMapping(value = "/activate")
+    public ResponseEntity<Boolean> activateAccount(@RequestBody ActivationRequest request) {
         System.out.println("controller");
-        return ResponseEntity.ok(service.activateAccount(email, key));
+        return ResponseEntity.ok(service.activateAccount(request));
     }
 
     @PostMapping(value = "/password/email")
